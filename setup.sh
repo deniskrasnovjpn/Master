@@ -19,5 +19,5 @@ apt-get install -y -qq --no-install-recommends \
   pandoc fonts-liberation \
   tesseract-ocr tesseract-ocr-deu tesseract-ocr-rus tesseract-ocr-eng
 
-# Python: PDF processing
-python3 -m pip install -q --break-system-packages pymupdf
+# Python: PDF processing; zstd for Anki collection exports (.colpkg / .apkg)
+python3 -m pip install -q --break-system-packages pymupdf zstandard
