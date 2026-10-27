@@ -51,3 +51,7 @@ python3 -m pip install -q --break-system-packages pymupdf zstandard \
 # Node CLIs for the obsidian plugin's skills: defuddle (web page → Markdown), knap (templates → notes)
 npm install -g --no-fund --no-audit defuddle knap \
   || warn "npm packages not installed"
+
+# Codex CLI (OpenAI) for the codex plugin (/codex:setup, /codex:rescue); login stays per session
+npm install -g --no-fund --no-audit @openai/codex \
+  || warn "Codex CLI not installed"

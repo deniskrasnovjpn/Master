@@ -9,8 +9,9 @@
   подтягивается их текущая версия, копий здесь нет. При совпадении имён побеждает `skills/`.
 - `setup.sh` — настройка облачного окружения: ставит общие инструменты (pandoc, шрифты Liberation,
   Tesseract OCR с языками deu/rus/eng, PyMuPDF, zstandard — для чтения экспортов Anki
-  `.colpkg`/`.apkg`; npm-пакеты defuddle и knap для скиллов плагина Obsidian), базовую копию
-  правил и скиллов в `~/.claude/` и hook SessionStart из `hooks/`.
+  `.colpkg`/`.apkg`; npm-пакеты defuddle и knap для скиллов плагина Obsidian; Codex CLI
+  `@openai/codex` для плагина codex), базовую копию правил и скиллов в `~/.claude/` и hook
+  SessionStart из `hooks/`.
 - `setup-stub.sh` — текст для поля **Setup script** облачного окружения: клонирует этот репозиторий
   и запускает `setup.sh`. Ошибка любого шага — предупреждение, сессия всё равно запускается.
 - `hooks/bootstrap.sh` — hook SessionStart, `setup.sh` кладёт его в
