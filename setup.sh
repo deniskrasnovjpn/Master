@@ -47,3 +47,7 @@ PY
 # Python: PDF processing; zstd for Anki collection exports (.colpkg / .apkg)
 python3 -m pip install -q --break-system-packages pymupdf zstandard \
   || warn "Python packages not installed"
+
+# Node CLIs for the obsidian plugin's skills: defuddle (web page → Markdown), knap (templates → notes)
+npm install -g --no-fund --no-audit defuddle knap \
+  || warn "npm packages not installed"
