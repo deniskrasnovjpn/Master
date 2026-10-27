@@ -3,38 +3,22 @@
 # at every session start, resume, /clear and compaction. New sessions start from the environment
 # snapshot, whose ~/.claude/CLAUDE.md and skills are those of the last snapshot build; this script
 # brings the session up to the current Master:
-# - copies changed skills into ~/.claude/skills/, removes the ones deleted from Master and asks
-#   Claude Code to re-scan them (reloadSkills);
+# - brings ~/.claude/skills/ up to Master's skills and the upstream ones from skills-upstream.txt
+#   (hooks/sync-skills.sh) and asks Claude Code to re-scan them (reloadSkills);
 # - if CLAUDE.md differs from ~/.claude/CLAUDE.md, passes its current text to Claude as
 #   additionalContext. The file itself is left as is: Claude Code has read it before the hook ran.
+# With --skills-only (local Windows sessions, which keep their own CLAUDE.md) only the skills are synced.
 # Only the hook's JSON goes to stdout; everything else goes to stderr.
 set -uo pipefail
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 exec 3>&1 1>&2
 
-reload=false
-state="$HOME/.claude/.master-skills"   # skills installed from Master, written by setup.sh
-if [ -d "$HERE/skills" ]; then
-  mkdir -p "$HOME/.claude/skills"
-  current=$(find "$HERE/skills" -mindepth 1 -maxdepth 1 -type d -printf '%f\n' | sort)
-  if [ -f "$state" ]; then
-    while IFS= read -r name; do
-      [ -n "$name" ] && [ -d "$HOME/.claude/skills/$name" ] || continue
-      grep -qxF -- "$name" <<<"$current" && continue
-      rm -rf "${HOME:?}/.claude/skills/$name" && reload=true
-    done < "$state"
-  fi
-  while IFS= read -r name; do
-    [ -n "$name" ] || continue
-    diff -rq "$HERE/skills/$name" "$HOME/.claude/skills/$name" >/dev/null 2>&1 && continue
-    rm -rf "${HOME:?}/.claude/skills/$name"
-    cp -r "$HERE/skills/$name" "$HOME/.claude/skills/$name" && reload=true
-  done <<<"$current"
-  printf '%s\n' "$current" > "$state"
-fi
+reload=$(bash "$HERE/hooks/sync-skills.sh")
+[ "$reload" = true ] || reload=false
 
 changed=false
-[ -f "$HERE/CLAUDE.md" ] && ! cmp -s "$HERE/CLAUDE.md" "$HOME/.claude/CLAUDE.md" && changed=true
+[ "${1:-}" != --skills-only ] && [ -f "$HERE/CLAUDE.md" ] \
+  && ! cmp -s "$HERE/CLAUDE.md" "$HOME/.claude/CLAUDE.md" && changed=true
 
 python3 - "$HERE/CLAUDE.md" "$reload" "$changed" >&3 <<'PY'
 import json, sys

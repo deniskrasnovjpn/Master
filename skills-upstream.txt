@@ -1,0 +1,13 @@
+# Skills taken straight from their GitHub repositories instead of being copied into skills/.
+# hooks/sync-skills.sh fetches the current version of each at every session start.
+# Format: <owner/repo> <path of the skill folder in that repo>; the folder name is the skill name.
+mattpocock/skills skills/in-progress/writing-fragments
+mattpocock/skills skills/in-progress/writing-beats
+mattpocock/skills skills/in-progress/writing-shape
+mattpocock/skills skills/productivity/wait-what
+mattpocock/skills skills/productivity/to-questionnaire
+mattpocock/skills skills/productivity/writing-for-agents
+mattpocock/skills skills/productivity/grill-me
+mattpocock/skills skills/productivity/grilling
+mattpocock/skills skills/productivity/handoff
+mattpocock/skills skills/productivity/teach

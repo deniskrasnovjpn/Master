@@ -11,11 +11,11 @@ HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO="$HOME/.local/share/claude-master"
 warn() { echo "WARNING: $*" >&2; }
 
-# Global rules and skills: the baseline that the hook updates
-mkdir -p ~/.claude/skills
+# Global rules and skills (skills/ and the upstream ones from skills-upstream.txt): the baseline
+# that the hook updates
+mkdir -p ~/.claude
 cp "$HERE/CLAUDE.md" ~/.claude/CLAUDE.md || warn "global CLAUDE.md not installed"
-cp -r "$HERE/skills/." ~/.claude/skills/ || warn "global skills not installed"
-find "$HERE/skills" -mindepth 1 -maxdepth 1 -type d -printf '%f\n' | sort > ~/.claude/.master-skills
+bash "$HERE/hooks/sync-skills.sh" >/dev/null || warn "global skills not installed"
 
 # SessionStart hook: a copy of this repo for it to update, the hook script and its entry
 # in ~/.claude/settings.json (merged: other keys and hooks stay)
