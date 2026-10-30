@@ -4,7 +4,6 @@
 mattpocock/skills skills/in-progress/writing-fragments
 mattpocock/skills skills/in-progress/writing-beats
 mattpocock/skills skills/in-progress/writing-shape
-mattpocock/skills skills/productivity/wait-what
 mattpocock/skills skills/productivity/to-questionnaire
 mattpocock/skills skills/productivity/writing-for-agents
 mattpocock/skills skills/productivity/grill-me
